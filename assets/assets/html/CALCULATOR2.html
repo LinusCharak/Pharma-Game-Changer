@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pharma Order Calculator</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.container {
+  max-width: 450px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 0 auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+select, input {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#orderList {
+  margin-top: 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.remove-btn {
+  width: 70px;
+  background: #dc3545;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.remove-btn:hover {
+  background: #b02a37;
+}
+
+.summary {
+  text-align: right;
+  font-size: 16px;
+  margin-top: 6px;
+  color: #333;
+}
+
+.total strong {
+  font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🛒 Order Calculator</h2>
+
+<div class="container">
+
+<label>Select Product:</label>
+<select id="product">
+  <option value="">-- Choose a product --</option>
+</select>
+
+<label>Enter Quantity:</label>
+<input type="number" id="qty" placeholder="e.g. 2" min="1"/>
+
+<button onclick="addItem()">Add to Order</button>
+
+<div id="orderList"></div>
+
+<div class="summary">GST 5%: ₹<span id="gst5">0.00</span></div>
+
+<!-- 🔥 Hidden by default -->
+<div class="summary" id="gst18Row" style="display:none;">
+  GST 18%: ₹<span id="gst18">0.00</span>
+</div>
+
+<div class="summary total">
+  <strong>Grand Total (Incl. GST): ₹<span id="grandTotal">0.00</span></strong>
+</div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAA73YF5xn2_MlS_PSelrknDP5wUNeOtn0",
+  databaseURL: "https://pharma-calculator.firebaseio.com/"
+};
+
+firebase.initializeApp(firebaseConfig);
+const dbRef = firebase.database().ref();
+
+const productSelect = document.getElementById("product");
+const qtyInput = document.getElementById("qty");
+const orderList = document.getElementById("orderList");
+
+const gst5El = document.getElementById("gst5");
+const gst18El = document.getElementById("gst18");
+const grandTotalEl = document.getElementById("grandTotal");
+const gst18Row = document.getElementById("gst18Row");
+
+let products = [];
+let orders = [];
+
+dbRef.once("value").then(snapshot => {
+  const data = snapshot.val();
+  products = Object.keys(data).map(name => ({
+    name,
+    price: data[name]
+  }));
+
+  products.forEach((product, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = `${product.name} - ₹${product.price}`;
+    productSelect.appendChild(opt);
+  });
+});
+
+function addItem() {
+  const selectedIndex = productSelect.value;
+  const qty = parseInt(qtyInput.value);
+
+  if (selectedIndex === "" || isNaN(qty) || qty <= 0) {
+    alert("Please select product and valid quantity");
+    return;
+  }
+
+  const product = products[selectedIndex];
+  const total = product.price * qty;
+
+  orders.push({
+    id: Date.now(),
+    name: product.name,
+    qty,
+    total
+  });
+
+  updateOrderList();
+  qtyInput.value = "";
+  productSelect.value = "";
+}
+
+function removeItem(id) {
+  orders = orders.filter(item => item.id !== id);
+  updateOrderList();
+}
+
+function updateOrderList() {
+
+  orderList.innerHTML = "";
+
+  let subtotal5 = 0;
+  let subtotal18 = 0;
+
+  orders.forEach(item => {
+
+    if (item.name.trim().toUpperCase() === "KOFOL GARGLE 100ML") {
+      subtotal18 += item.total;
+    } else {
+      subtotal5 += item.total;
+    }
+
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <span>${item.name} x ${item.qty} = ₹${item.total.toFixed(2)}</span>
+      <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+    `;
+    orderList.appendChild(div);
+  });
+
+  const gst5 = subtotal5 * 0.05;
+  const gst18 = subtotal18 * 0.18;
+
+  const grandTotal = subtotal5 + subtotal18 + gst5 + gst18;
+
+  gst5El.textContent = gst5.toFixed(2);
+  grandTotalEl.textContent = grandTotal.toFixed(2);
+
+  // 🔥 Show GST 18% only if KOFOL exists
+  if (subtotal18 > 0) {
+    gst18El.textContent = gst18.toFixed(2);
+    gst18Row.style.display = "block";
+  } else {
+    gst18Row.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>
