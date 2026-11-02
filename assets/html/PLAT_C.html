@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLAT-C</title>
+<meta name="description" content="PLAT-C – in dengue, malaria, viral and drug-induced thrombocytopenia.">
+<style>
+  :root {
+    --bg: #f5f8f5; --card: #ffffff; --ink: #1c2730; --muted: #5a6872;
+    --brand: #1d7a3c; --brand-dark: #14592b; --brand-soft: #e6f3ea; --line: #dfe7ea;
+    --accent: #d93a3a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10181c; --card: #172227; --ink: #e6eef1; --muted: #9fb1b9;
+      --brand: #5cc77e; --brand-dark: #8ddca6; --brand-soft: #173a24; --line: #27363c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px 56px; }
+
+  .hero-img { background: #f7f8f3; }
+  .hero { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+          display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; }
+  .hero-text { padding: 32px 28px; }
+  .hero h1 { margin: 0 0 8px; font-size: 2.4rem; line-height: 1.1; color: var(--brand-dark); letter-spacing: .5px; }
+  .hero .for { margin: 0; font-style: italic; color: var(--ink); font-size: 1.05rem; }
+  .hero .sub { margin: 4px 0 18px; font-style: italic; color: var(--muted); }
+  .tagline { display: inline-block; background: var(--brand); color: #fff; font-weight: 700;
+             padding: 8px 16px; border-radius: 999px; }
+  .hero img { width: 100%; height: auto; display: block; }
+
+  nav.toc { margin: 20px 0 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+  nav.toc a { font-size: .85rem; text-decoration: none; color: var(--brand-dark); background: var(--brand-soft);
+              padding: 5px 10px; border-radius: 999px; }
+
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+            padding: 20px 22px; margin-top: 16px; }
+  h2 { margin: 0 0 10px; font-size: 1.15rem; color: var(--brand-dark);
+       border-left: 4px solid var(--accent); padding-left: 10px; }
+  p { margin: 0 0 10px; }
+  p:last-child { margin-bottom: 0; }
+  ul { margin: 0; padding-left: 1.25em; }
+  li { margin: 4px 0; }
+  li::marker { color: var(--brand); }
+  .note { color: var(--muted); font-size: .95rem; }
+
+  .table-wrap { overflow-x: auto; margin: 4px 0 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { background: var(--brand); color: #fff; font-weight: 600; }
+  thead th:first-child { border-top-left-radius: 8px; }
+  thead th:last-child { border-top-right-radius: 8px; }
+  tbody tr:nth-child(even) td { background: var(--brand-soft); }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  tr.ours td { font-weight: 700; }
+  em.latin { color: var(--muted); }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 6px 0 12px; }
+  .stat { background: var(--brand-soft); border-radius: 12px; padding: 12px; text-align: center; }
+  .stat b { display: block; font-size: 1.8rem; color: var(--brand-dark); line-height: 1.1; }
+  .stat span { font-size: .85rem; color: var(--muted); }
+
+  .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .fact { background: var(--brand-soft); border-radius: 12px; padding: 12px 14px; }
+  .fact b { display: block; color: var(--brand-dark); font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; }
+
+  section.recall { background: var(--brand); border-color: var(--brand); color: #fff; }
+  section.recall h2 { color: #fff; border-left-color: var(--accent); }
+  section.recall li::marker { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { padding: 22px 18px 6px; text-align: center; }
+    .hero h1 { font-size: 2rem; }
+    section { padding: 16px; }
+    .stats { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; }
+    nav.toc { display: none; }
+    section, .hero { break-inside: avoid; }
+  }
+
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  img { max-width: 100%; }
+  /* Phones: each table row becomes a small card, so nothing scrolls sideways */
+  @media (max-width: 640px) {
+    main { padding: 16px 12px 40px; }
+    h2 { font-size: 1.05rem; }
+    nav.toc a { font-size: .8rem; }
+    .table-wrap { overflow: visible; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    tr { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; margin: 0 0 10px;
+         background: var(--card); }
+    tbody tr:nth-child(even) td { background: transparent; }
+    td { border: 0; padding: 4px 0; display: flex; justify-content: space-between; gap: 12px; text-align: right; }
+    td.num { text-align: right; white-space: normal; }
+    td::before { content: attr(data-label); font-weight: 600; color: var(--muted); text-align: left; flex: 0 0 auto; max-width: 48%; }
+    td:first-child { display: block; text-align: left; font-weight: 700; font-size: 1.02rem;
+                     color: var(--brand-dark); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-bottom: 4px; }
+    td:first-child::before { content: none; }
+  }
+  .sublines { margin: 6px 0 0; color: var(--muted); }
+  .refs { font-size: .88rem; color: var(--muted); }
+  .facts3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 640px) { .facts3 { grid-template-columns: 1fr; } }
+  .subhead { margin: 0 0 10px; font-weight: 700; color: var(--brand-dark); }
+</style>
+
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="hero-text">
+    <h1>PLAT-C</h1>
+    <p class="for">In Dengue, Malaria, Viral &amp; Drug-induced Thrombocytopenia</p>
+        <span class="tagline">Boosts Platelets</span>
+  </div>
+  <div class="hero-img"><img src="data:image/webp;base64,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" alt="Charak PLAT-C Tablets, 20 tablets"></div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#product">Product</a><a href="#indications">Indications</a><a href="#platelets">Platelets</a>
+  <a href="#causes">Causes</a><a href="#ingredients">Ingredients</a><a href="#dengue">Dengue</a><a href="#actions">Key actions</a>
+  <a href="#evidence">Evidence</a><a href="#dosage">Dosage &amp; MRP</a>
+</nav>
+
+<section id="product">
+  <h2>What is the Product – one line Description?</h2>
+  <p>PLAT-C is positioned as a platelet-support formulation for thrombocytopenia associated with dengue, malaria, viral
+  infections and drug-induced causes.</p>
+  <p>The presentation focuses on platelet production, platelet destruction and the clinical significance of low
+  platelet counts.</p>
+</section>
+
+<section id="indications">
+  <h2>What are the Indications?</h2>
+  <ul>
+    <li>Dengue-associated thrombocytopenia.</li>
+    <li>Malaria-associated thrombocytopenia.</li>
+    <li>Viral infection-associated thrombocytopenia.</li>
+    <li>Drug-induced thrombocytopenia.</li>
+  </ul>
+</section>
+
+<section id="platelets">
+  <h2>What are Platelets?</h2>
+  <p>Platelets (thrombocytes) are blood components that play a central role in clot formation. They gather at sites of
+  vessel injury, adhere to the injured vessel lining and participate in formation of a clot.</p>
+  <div class="facts3">
+    <div class="fact"><b>Normal platelet level</b>150,000–450,000/µL</div>
+    <div class="fact"><b>Platelet lifespan</b>approximately 7–10 days</div>
+    <div class="fact"><b>Low platelet counts</b>can increase bleeding risk</div>
+  </div>
+</section>
+
+<section>
+  <h2>What is Thrombocytopenia?</h2>
+  <p>Thrombocytopenia is a condition characterized by an abnormally low platelet count, typically below 150,000/µL,
+  which may impair normal clotting and cause easy bruising or excessive bleeding.</p>
+  <ul>
+    <li>Warning signs include easy bruising, small red spots on skin, bleeding gums, nosebleeds and heavy menstrual periods.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>How are Platelets Produced?</h2>
+  <p>Platelets are formed in the bone marrow from large precursor cells called megakaryocytes through thrombopoiesis /
+  megakaryopoiesis.</p>
+  <ul>
+    <li>Megakaryocytes extend proplatelet projections that fragment into individual platelets.</li>
+    <li>Platelet production is regulated by thrombopoietin, produced in the liver and kidneys.</li>
+  </ul>
+</section>
+
+<section id="causes">
+  <h2>What are the Causes of Thrombocytopenia?</h2>
+  <ul>
+    <li><strong>Reduced production:</strong> bone-marrow disorders, nutritional deficiencies and effects of chemotherapy/radiation.</li>
+    <li><strong>Increased destruction or consumption:</strong> immune disorders, infections and autoimmune conditions.</li>
+    <li><strong>Splenic sequestration:</strong> an enlarged spleen can trap platelets.</li>
+    <li><strong>Liver disease and alcohol:</strong> the presentation notes reduced platelet-stimulating hormone, splenic trapping and direct marrow effects of alcohol.</li>
+    <li>Pregnancy and certain medicines can also be associated with low platelet counts.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What is Febrile Thrombocytopenia?</h2>
+  <p>Febrile thrombocytopenia is the co-occurrence of fever and a low platelet count.</p>
+  <ul>
+    <li>Dengue fever</li>
+    <li>Malaria fever</li>
+    <li>Scrub typhus</li>
+    <li>Septicaemia</li>
+    <li>Enteric fever</li>
+    <li>Leptospirosis</li>
+    <li>Severe Fever with Thrombocytopenia Syndrome (SFTS)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Why do Viral Infections Cause Thrombocytopenia?</h2>
+  <p>Viral infections may cause thrombocytopenia mainly by increasing platelet destruction through immune-mediated
+  responses and by reducing platelet production in the bone marrow.</p>
+  <ul>
+    <li>Dengue, Zika and Chikungunya are highlighted as mosquito-borne viral infections associated with thrombocytopenia.</li>
+  </ul>
+</section>
+
+<section id="dengue">
+  <h2>What Happens to Platelets in Dengue?</h2>
+  <ul>
+    <li><strong>Impaired megakaryopoiesis:</strong> dengue can disrupt megakaryocyte proliferation and maturation, reducing platelet production.</li>
+    <li><strong>Platelet sequestration:</strong> platelets may become trapped in the liver, spleen and on endothelial surfaces.</li>
+    <li><strong>Increased platelet activation:</strong> the virus can trigger platelet activation, aggregation and premature cell death, contributing to decreased platelet counts.</li>
+  </ul>
+</section>
+
+<section id="ingredients">
+  <h2>What are the Ingredients?</h2>
+  <p class="subhead" style="margin-top:0">Standardised extract with Bio-enhancer</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Name</th><th>Latin name</th><th class="num">Qty per tablet (in extract)</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Name">Carica papaya Lf.</td><td data-label="Latin name">—</td><td class="num" data-label="Qty per tablet (in extract)">450 mg</td></tr>
+        <tr><td data-label="Name">Bhumyamalaki</td><td data-label="Latin name"><em class="latin">Phyllanthus niruri</em></td><td class="num" data-label="Qty per tablet (in extract)">100 mg</td></tr>
+        <tr><td data-label="Name">Guduchi</td><td data-label="Latin name"><em class="latin">Tinospora cordifolia</em></td><td class="num" data-label="Qty per tablet (in extract)">75 mg</td></tr>
+        <tr><td data-label="Name">Tulasi</td><td data-label="Latin name"><em class="latin">Ocimum sanctum</em></td><td class="num" data-label="Qty per tablet (in extract)">25 mg</td></tr>
+        <tr><td data-label="Name">Maricha</td><td data-label="Latin name"><em class="latin">Piper nigrum</em></td><td class="num" data-label="Qty per tablet (in extract)">10 mg</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="actions">
+  <h2>What are the Key Product Actions?</h2>
+  <ul>
+    <li>Blood has four main components: plasma, red blood cells, white blood cells, and platelets.</li>
+    <li><strong>Production of Platelets (thrombocytes)</strong><br>
+      Platelets are formed in the bone marrow from large precursor cells called megakaryocytes by a process called
+      thrombopoiesis/ Megakaryopoiesis.<br>
+      Megakaryocytes extend proplatelets thin, branched projections containing cytoplasm and organelles which fragment
+      into individual platelets.<br>
+      Production is regulated by thrombopoietin, produced in the liver and kidneys.</li>
+    <li>Thrombocytopenia is a condition characterized by an abnormally low platelet count (typically &lt;150000µL) leading
+      to impaired blood clotting, easy bruising, and excessive bleeding.</li>
+    <li>Platelets are essential for clotting, and low levels often stem from:
+      <ul>
+        <li><strong>Splenic Sequestration:</strong> An enlarged spleen, often caused by liver cirrhosis or myelofibrosis,
+          can trap platelets, removing them from circulation.</li>
+        <li><strong>Liver Disease &amp; Alcohol</strong><br>64-84% of people with chronic liver disease have low platelets
+          because<br>Liver makes less platelet-stimulating hormone<br>Enlarged spleen traps platelets<br>Alcohol directly
+          damages bone marrow</li>
+        <li><strong>Pregnancy</strong><br>About 5% of pregnant women develop mild low platelet count. Severe cases (like
+          preeclampsia) need immediate medical care.</li>
+      </ul>
+    </li>
+    <li>Viral infections cause thrombocytopenia (low platelet count) mainly by increasing platelet destruction through
+      immune-mediated responses and reducing platelet production in the bone marrow.</li>
+    <li><strong>Dengue Fever &amp; Low Platelets</strong> – Thrombocytopenia in Dengue is a serious concern
+      <ul>
+        <li><strong>Causes Impaired Megakaryopoiesis</strong> – Dengue reduces platelet production by disruption of
+          megakaryocyte proliferation and maturation.</li>
+        <li><strong>Causes platelet sequestration:</strong> (trapped) in the liver, spleen, and on sticky endothelial
+          cells within small vessels, contributing to microvascular leakage and reduced organ perfusion.</li>
+        <li><strong>Increased Platelet Activation:</strong><br>The virus triggers platelets to become active, aggregate,
+          and undergo premature cell death (apoptosis), leading to rapid destruction &amp; decreased platelet counts.</li>
+      </ul>
+    </li>
+    <li>Thrombopoietin (TPO) receptor agonists are a class of medications that mimic the body's natural TPO to stimulate
+      the bone marrow to produce more platelets.</li>
+    <li>A proprietary Ayurvedic medicine made from 5 powerful natural herbs that work together to restore your platelet
+      count safely and effectively.</li>
+  </ul>
+</section>
+
+<section id="evidence">
+  <h2>What is the Evidence to Support the Claims?</h2>
+  <ul>
+    <li>PLAT C Proven Results</li>
+    <li class="refs">Pharmacol. 12:610912; Immuno 2024, 4(4), 629-645. 2. Pharmacol. 12:610912; Nutrients 2022, 14(8),
+      1584. 3. Journal of Ethnopharmacology, Volume 330, 10 August 2024, 118242; 4. J Basic Clin Pharm. 2011 Aug
+      15;2(3):139–142.</li>
+    <li>Arachidonate 12-lipoxygenase (ALOX12)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What are the Unique Prescribing Reasons?</h2>
+  <ul>
+    <li>Positioned specifically for thrombocytopenia associated with dengue, malaria, viral and drug-induced causes.</li>
+    <li>The presentation addresses the platelet problem through the concepts of platelet production, destruction and sequestration.</li>
+    <li>Relevant product discussion point in febrile thrombocytopenia where low platelets are a clinical concern.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Target Audience – To whom should we promote?</h2>
+  <ul>
+    <li>Physicians managing dengue and other febrile illnesses associated with thrombocytopenia.</li>
+    <li>Physicians managing malaria and viral infections with low platelet counts.</li>
+    <li>Physicians dealing with suspected drug-induced thrombocytopenia.</li>
+  </ul>
+</section>
+
+<section id="dosage">
+  <h2>What is the Dosage, Packing &amp; MRP?</h2>
+  <div class="facts3">
+    <div class="fact"><b>Dosage</b>T Tab BID for 7 to 10 days</div>
+    <div class="fact"><b>Packing</b>Pack of 20 tablets</div>
+    <div class="fact"><b>MRP</b>₹190.00</div>
+  </div>
+</section>
+
+<section class="recall">
+  <h2>Quick Recall</h2>
+  <ul>
+    <li>PLAT-C – In Dengue, Malaria, Viral &amp; Drug-induced Thrombocytopenia.</li>
+    <li>Core clinical issue: low platelet count and associated bleeding risk.</li>
+    <li>Platelet production occurs in bone marrow through megakaryopoiesis; thrombopoietin regulates production.</li>
+    <li>Dengue-related thrombocytopenia involves impaired megakaryopoiesis, sequestration and increased platelet activation/destruction.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

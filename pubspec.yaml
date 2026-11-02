@@ -1,0 +1,85 @@
+name: pharma_game_changer
+description: "Pharma Game Changer - Flutter rebuild (Android, iOS, Web, Desktop)"
+publish_to: 'none'
+version: 1.52.0+52
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Flutter / UI
+  cupertino_icons: ^1.0.6
+  lottie: ^3.1.3
+
+  # Supabase
+  supabase_flutter: ^2.8.0
+
+  # Secure storage
+  flutter_secure_storage: ^9.2.4
+
+  # Web / HTML
+  webview_flutter: ^4.13.0
+
+  # Firebase
+  firebase_core: ^3.6.0
+  firebase_database: ^11.1.4
+
+  # Networking / files
+  dio: ^5.7.0
+  path_provider: ^2.1.4
+  permission_handler: ^11.3.1
+
+  # Local storage
+  shared_preferences: ^2.3.2
+
+  # Sharing
+  share_plus: ^10.0.2
+
+  # Video
+  video_player: ^2.9.2
+
+  # PDF viewer
+  pdfrx: ^2.4.8
+
+  # Open external URLs
+  url_launcher: ^6.3.2
+  
+  package_info_plus: ^8.0.0
+  pdf: ^3.13.1
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/html/
+    - assets/fonts/
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+
+  image_path: "assets/images/ICON_PGC.png"
+
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/ICON_PGC_FOREGROUND.png"
+  adaptive_icon_foreground_inset: 0
+
+  web:
+    generate: true
+    image_path: "assets/images/ICON_PGC.png"
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
+
+  min_sdk_android: 21
+
