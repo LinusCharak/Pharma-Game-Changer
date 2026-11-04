@@ -1,5 +1,10 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'product_html_frame_stub.dart'
+    if (dart.library.html) 'product_html_frame_web.dart';
+
+const String _detailingStoryAsset = 'assets/html/DETAILINGSTORY.html';
 
 class DetailingStoryScreen extends StatefulWidget {
   const DetailingStoryScreen({super.key});
@@ -9,7 +14,9 @@ class DetailingStoryScreen extends StatefulWidget {
 }
 
 class _DetailingStoryScreenState extends State<DetailingStoryScreen> {
-  late final WebViewController _controller;
+  // Not created on the web: webview_flutter has no web implementation
+  // (the iframe in ProductHtmlFrame is used there instead).
+  WebViewController? _controller;
 
   bool _isLoading = true;
   bool _hasError = false;
@@ -17,6 +24,8 @@ class _DetailingStoryScreenState extends State<DetailingStoryScreen> {
   @override
   void initState() {
     super.initState();
+
+    if (kIsWeb) return;
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -48,7 +57,7 @@ class _DetailingStoryScreenState extends State<DetailingStoryScreen> {
           },
         ),
       )
-      ..loadFlutterAsset('assets/html/DETAILINGSTORY.html');
+      ..loadFlutterAsset(_detailingStoryAsset);
   }
 
   void _retry() {
@@ -57,11 +66,20 @@ class _DetailingStoryScreenState extends State<DetailingStoryScreen> {
       _hasError = false;
     });
 
-    _controller.loadFlutterAsset('assets/html/DETAILINGSTORY.html');
+    _controller?.loadFlutterAsset(_detailingStoryAsset);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Detailing Story'),
+        ),
+        body: const ProductHtmlFrame(assetPath: _detailingStoryAsset),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detailing Story'),
@@ -70,7 +88,7 @@ class _DetailingStoryScreenState extends State<DetailingStoryScreen> {
         children: [
           if (!_hasError)
             WebViewWidget(
-              controller: _controller,
+              controller: _controller!,
             ),
 
           if (_isLoading && !_hasError)

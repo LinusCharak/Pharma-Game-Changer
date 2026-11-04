@@ -1,11 +1,15 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/promotogram_service.dart';
+import 'web_page_frame_stub.dart'
+    if (dart.library.html) 'web_page_frame_web.dart';
 
-/// Replaces the Promotogram screen: fetches a URL from Firebase (see
-/// PromotogramService), then loads that URL in a WebView. The page shown
-/// is entirely controlled from Firebase/GitHub Pages -- nothing about
-/// which page loads is hardcoded here, matching the original design.
+/// Replaces the Promotogram screen: fetches a URL from Firebase (see PromotogramService), then shows that URL. Which page shows is controlled from Firebase/GitHub Pages, not hardcoded here.
+///
+/// Android / iOS: WebView. Chrome (web): iframe, because webview_flutter
+/// has no web implementation. On the web an "open in new tab" button is
+/// also shown, in case the website does not allow being shown in a frame.
 class PromotogramScreen extends StatefulWidget {
   const PromotogramScreen({super.key});
 
@@ -16,6 +20,7 @@ class PromotogramScreen extends StatefulWidget {
 class _PromotogramScreenState extends State<PromotogramScreen> {
   final _service = PromotogramService();
   WebViewController? _controller;
+  String? _webUrl; // web only
   bool _pageLoading = true;
   String? _error;
 
@@ -29,10 +34,19 @@ class _PromotogramScreenState extends State<PromotogramScreen> {
     setState(() {
       _error = null;
       _controller = null;
+      _webUrl = null;
     });
 
     try {
       final url = await _service.fetchUrl();
+
+      if (kIsWeb) {
+        // No WebViewController on the web -- the iframe shows the page.
+        if (!mounted) return;
+        setState(() => _webUrl = url);
+        return;
+      }
+
       final controller = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..setNavigationDelegate(
@@ -57,30 +71,51 @@ class _PromotogramScreenState extends State<PromotogramScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final webUrl = _webUrl;
+
+    Widget body;
+    if (_error != null) {
+      body = Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(_error!, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              ElevatedButton(onPressed: _load, child: const Text('Retry')),
+            ],
+          ),
+        ),
+      );
+    } else if (kIsWeb) {
+      body = webUrl == null
+          ? const Center(child: CircularProgressIndicator())
+          : WebPageFrame(url: webUrl);
+    } else if (_controller == null) {
+      body = const Center(child: CircularProgressIndicator());
+    } else {
+      body = Stack(
+        children: [
+          WebViewWidget(controller: _controller!),
+          if (_pageLoading) const Center(child: CircularProgressIndicator()),
+        ],
+      );
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Promotogram')),
-      body: _error != null
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(_error!, textAlign: TextAlign.center),
-                    const SizedBox(height: 16),
-                    ElevatedButton(onPressed: _load, child: const Text('Retry')),
-                  ],
-                ),
-              ),
-            )
-          : _controller == null
-              ? const Center(child: CircularProgressIndicator())
-              : Stack(
-                  children: [
-                    WebViewWidget(controller: _controller!),
-                    if (_pageLoading) const Center(child: CircularProgressIndicator()),
-                  ],
-                ),
+      appBar: AppBar(
+        title: const Text('Promotogram'),
+        actions: [
+          if (kIsWeb && webUrl != null)
+            IconButton(
+              tooltip: 'Open in new tab',
+              icon: const Icon(Icons.open_in_new),
+              onPressed: () => openUrlInNewTab(webUrl),
+            ),
+        ],
+      ),
+      body: body,
     );
   }
 }

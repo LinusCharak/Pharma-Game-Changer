@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -355,19 +356,39 @@ class _DemoDetailingScreenState extends State<DemoDetailingScreen> {
   // ================================================================
 
   Widget _buildTopVideoArea() {
+    // The header / player is sized from the screen WIDTH. On a wide window
+    // (Chrome) that makes it taller than the window and pushes the video
+    // list out of view ("BOTTOM OVERFLOWED"). Limit its width so it never
+    // takes more than about half of the height. On a phone in portrait the
+    // limit is larger than the screen width, so nothing changes there.
+    final size = MediaQuery.of(context).size;
+    final maxWidth = math.min(
+      size.width,
+      math.max(320.0, size.height * 0.5 * (16 / 9)),
+    );
+
+    final Widget top;
+
     if (_selectedVideo == null) {
-      return const _DemoDetailingHeader();
+      top = const _DemoDetailingHeader();
+    } else {
+      top = _EmbeddedVideoPlayer(
+        controller: _controller,
+        initialized: _videoInitialized,
+        error: _videoError,
+        showControls: _showControls,
+        title: _selectedVideo!.title,
+        onTap: _toggleControls,
+        onPlayPause: _togglePlayPause,
+        onFullscreen: _openFullscreen,
+      );
     }
 
-    return _EmbeddedVideoPlayer(
-      controller: _controller,
-      initialized: _videoInitialized,
-      error: _videoError,
-      showControls: _showControls,
-      title: _selectedVideo!.title,
-      onTap: _toggleControls,
-      onPlayPause: _togglePlayPause,
-      onFullscreen: _openFullscreen,
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxWidth),
+        child: top,
+      ),
     );
   }
 }
@@ -810,6 +831,10 @@ class _DemoVideoListItem extends StatelessWidget {
                   child: Image.network(
                     video.thumbnailUrl,
                     fit: BoxFit.cover,
+                    // Web only: load through a normal <img> tag so the
+                    // picture shows even if its website sends no CORS
+                    // headers. Ignored on Android.
+                    webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
                     loadingBuilder: (
                       context,
                       child,

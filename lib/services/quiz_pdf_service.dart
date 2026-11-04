@@ -254,7 +254,7 @@ class QuizPdfService {
 
       _sectionHeading('PARTICIPANT DETAILS'),
       _kvTable([
-        ['MR Name', _orDash(r.userName)],
+        ['Name', _orDash(r.userName)],
         ['Username', _orDash(r.username)],
         ['Designation', _orDash(r.designation)],
         ['HQ', _orDash(r.hq)],
@@ -344,7 +344,7 @@ class QuizPdfService {
       pw.SizedBox(height: 2),
       pw.Text(
         'TIME OUT = no answer within the allowed time.   '
-        'SKIPPED (APP LEFT) = the MR left the app while the question was displayed.',
+        'SKIPPED (APP LEFT) = the user left the app while the question was displayed.',
         style: _style(size: 8, color: PdfColors.grey700),
       ),
       pw.SizedBox(height: 10),
@@ -424,9 +424,9 @@ class QuizPdfService {
     // Spelled-out tags so the meaning survives grayscale printing.
     String? tag;
     if (isSelected && isCorrect) {
-      tag = "MR'S ANSWER - CORRECT";
+      tag = "USER'S ANSWER - CORRECT";
     } else if (isSelected) {
-      tag = "MR'S ANSWER - WRONG";
+      tag = "USER'S ANSWER - WRONG";
     } else if (isCorrect) {
       tag = 'CORRECT ANSWER';
     }

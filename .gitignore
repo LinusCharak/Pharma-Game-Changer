@@ -59,3 +59,9 @@ signing/
 
 # Android signing credentials
 /android/key.properties
+
+# Secrets - never commit
+android/key.properties
+*.jks
+*.keystore
+android/app/google-services.json

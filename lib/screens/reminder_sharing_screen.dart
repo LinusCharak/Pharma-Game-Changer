@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -6,6 +7,8 @@ import '../models/reminder_item.dart';
 import '../services/firebase_reminder_service.dart';
 import '../services/reminder_download_service.dart';
 import '../widgets/download_success_dialog.dart';
+import 'file_download_stub.dart'
+    if (dart.library.html) 'file_download_web.dart';
 
 /// The three mutually-exclusive panels.
 enum _ReminderView {
@@ -98,12 +101,6 @@ class _ReminderSharingScreenState
   // ------------------------------------------------------------------
 
   Future<void> _loadProducts() async {
-    if (mounted) {
-      setState(() {
-        _loadingProducts = true;
-      });
-    }
-
     try {
       final products = await _firebase.getProductList();
 
@@ -187,6 +184,28 @@ class _ReminderSharingScreenState
       return;
     }
 
+    // Web: start a normal browser download (goes to the browser's
+    // Downloads folder). The Share button is offered afterwards.
+    if (kIsWeb) {
+      await downloadFileFromUrl(item.imageUrl, item.title);
+
+      if (!mounted) return;
+
+      setState(() {
+        _showDownloadedInfo = false;
+        _showShareButton = true;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Download started. Check your browser\'s Downloads folder.',
+          ),
+        ),
+      );
+      return;
+    }
+
     setState(() {
       _downloading = true;
       _downloadProgress = 0;
@@ -249,20 +268,34 @@ class _ReminderSharingScreenState
   // ------------------------------------------------------------------
 
   Future<void> _share() async {
-  final item = _selectedItem;
-  final path = _downloadedPath;
+    final item = _selectedItem;
 
-  if (item == null || path == null) {
-    return;
+    if (item == null) {
+      return;
+    }
+
+    // Web: share the text and the image link.
+    if (kIsWeb) {
+      await Share.share(
+        '${item.description}\n${item.imageUrl}',
+      );
+      return;
+    }
+
+    // Android / iOS: share the downloaded image file.
+    final path = _downloadedPath;
+
+    if (path == null) {
+      return;
+    }
+
+    await Share.shareXFiles(
+      [
+        XFile(path),
+      ],
+      text: item.description,
+    );
   }
-
-  await Share.shareXFiles(
-    [
-      XFile(path),
-    ],
-    text: item.description,
-  );
-}
 
   // ------------------------------------------------------------------
   // Navigation

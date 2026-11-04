@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -59,5 +56,15 @@ class DefaultFirebaseOptions {
     projectId: 'sharing-pharma1',
     databaseURL: 'https://sharing-pharma1.firebaseio.com',
     storageBucket: 'sharing-pharma1.appspot.com',
+  );
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyB6bmawRVFx2U50XgoQDDEvzjpy3ADPP9s',
+    appId: '1:359357151058:web:7dc0dbdbe29e076a09ec8b',
+    messagingSenderId: '359357151058',
+    projectId: 'sharing-pharma1',
+    authDomain: 'sharing-pharma1.firebaseapp.com',
+    databaseURL: 'https://sharing-pharma1.firebaseio.com',
+    storageBucket: 'sharing-pharma1.appspot.com',
+    measurementId: 'G-6FS4XB7MB0',
   );
 }
