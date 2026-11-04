@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HYPONIDD-DM</title>
+<meta name="description" content="HYPONIDD-DM – multi-herbal standardized formulation for prediabetes and Type 2 diabetes mellitus.">
+<style>
+  :root {
+    --bg: #f4f7f8; --card: #ffffff; --ink: #1c2730; --muted: #5a6872;
+    --brand: #0f7f95; --brand-dark: #0b5f70; --brand-soft: #e3f3f6; --line: #dfe7ea;
+    --accent: #f2a33a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10181c; --card: #172227; --ink: #e6eef1; --muted: #9fb1b9;
+      --brand: #46c0d6; --brand-dark: #7fd6e6; --brand-soft: #173a42; --line: #27363c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px 56px; }
+
+  .hero { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+          display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; }
+  .hero-text { padding: 32px 28px; }
+  .hero h1 { margin: 0 0 8px; font-size: 2.4rem; line-height: 1.1; color: var(--brand-dark); letter-spacing: .5px; }
+  .hero .for { margin: 0; font-style: italic; color: var(--ink); font-size: 1.05rem; }
+  .hero .sub { margin: 4px 0 18px; font-style: italic; color: var(--muted); }
+  .tagline { display: inline-block; background: var(--brand); color: #fff; font-weight: 700;
+             padding: 8px 16px; border-radius: 999px; }
+  .hero img { width: 100%; height: auto; display: block; }
+
+  nav.toc { margin: 20px 0 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+  nav.toc a { font-size: .85rem; text-decoration: none; color: var(--brand-dark); background: var(--brand-soft);
+              padding: 5px 10px; border-radius: 999px; }
+
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+            padding: 20px 22px; margin-top: 16px; }
+  h2 { margin: 0 0 10px; font-size: 1.15rem; color: var(--brand-dark);
+       border-left: 4px solid var(--accent); padding-left: 10px; }
+  p { margin: 0 0 10px; }
+  p:last-child { margin-bottom: 0; }
+  ul { margin: 0; padding-left: 1.25em; }
+  li { margin: 4px 0; }
+  li::marker { color: var(--brand); }
+  .note { color: var(--muted); font-size: .95rem; }
+
+  .table-wrap { overflow-x: auto; margin: 4px 0 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { background: var(--brand); color: #fff; font-weight: 600; }
+  thead th:first-child { border-top-left-radius: 8px; }
+  thead th:last-child { border-top-right-radius: 8px; }
+  tbody tr:nth-child(even) td { background: var(--brand-soft); }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  tr.ours td { font-weight: 700; }
+  em.latin { color: var(--muted); }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 6px 0 12px; }
+  .stat { background: var(--brand-soft); border-radius: 12px; padding: 12px; text-align: center; }
+  .stat b { display: block; font-size: 1.8rem; color: var(--brand-dark); line-height: 1.1; }
+  .stat span { font-size: .85rem; color: var(--muted); }
+
+  .facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .fact { background: var(--brand-soft); border-radius: 12px; padding: 12px 14px; }
+  .fact b { display: block; color: var(--brand-dark); font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; }
+
+  section.recall { background: var(--brand); border-color: var(--brand); color: #fff; }
+  section.recall h2 { color: #fff; border-left-color: var(--accent); }
+  section.recall li::marker { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { padding: 22px 18px 6px; text-align: center; }
+    .hero h1 { font-size: 2rem; }
+    section { padding: 16px; }
+    .stats { grid-template-columns: 1fr; }
+    .facts { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; }
+    nav.toc { display: none; }
+    section, .hero { break-inside: avoid; }
+  }
+
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  img { max-width: 100%; }
+  /* Phones: each table row becomes a small card, so nothing scrolls sideways */
+  @media (max-width: 640px) {
+    main { padding: 16px 12px 40px; }
+    h2 { font-size: 1.05rem; }
+    nav.toc a { font-size: .8rem; }
+    .table-wrap { overflow: visible; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    tr { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; margin: 0 0 10px;
+         background: var(--card); }
+    tbody tr:nth-child(even) td { background: transparent; }
+    td { border: 0; padding: 4px 0; display: flex; justify-content: space-between; gap: 12px; text-align: right; }
+    td.num { text-align: right; white-space: normal; }
+    td::before { content: attr(data-label); font-weight: 600; color: var(--muted); text-align: left; flex: 0 0 auto; max-width: 48%; }
+    td:first-child { display: block; text-align: left; font-weight: 700; font-size: 1.02rem;
+                     color: var(--brand-dark); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-bottom: 4px; }
+    td:first-child::before { content: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+  <div class="hero-text">
+    <h1>HYPONIDD-DM</h1>
+    <p class="for">(For Prediabetes &amp; Type 2 Diabetes Mellitus)</p>
+    <p class="sub">(Multi-herbal standardized formulation for glycaemic support)</p>
+    <span class="tagline">Manages Diabetes Naturally</span>
+  </div>
+  <img src="data:image/webp;base64,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" alt="HYPONIDD-DM tablets bottle">
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#product">Product</a><a href="#indications">Indications</a><a href="#diabetes">Diabetes</a>
+  <a href="#mode">How it works</a><a href="#ingredients">Ingredients</a><a href="#evidence">Evidence</a>
+  <a href="#competitors">Competitors</a><a href="#dosage">Dosage</a>
+</nav>
+
+<section id="product">
+  <h2>What is the Product – one line Description?</h2>
+  <p>HYPONIDD-DM is a standardized herbal formulation containing Amalaki, Haridra, Guduchi, Rishyagandha, Raj jambu,
+  Meshashringi, Bijaka / Vijaysaar and Maricha.</p>
+  <p>It is positioned for prediabetes and Type 2 diabetes, with a multi-target approach covering insulin sensitivity,
+  insulin secretion, pancreatic β-cell support and glucose metabolism.</p>
+</section>
+
+<section id="indications">
+  <h2>What are the Indications?</h2>
+  <ul>
+    <li>Prediabetes.</li>
+    <li>Type 2 diabetes mellitus (T2DM).</li>
+    <li>Supportive management of glycaemic control along with appropriate lifestyle and medical care.</li>
+  </ul>
+</section>
+
+<section id="diabetes">
+  <h2>What is Diabetes?</h2>
+  <p>Diabetes is a chronic condition in which blood glucose remains abnormally high because the body does not produce
+  enough insulin, does not use insulin properly, or both.</p>
+  <ul>
+    <li>Insulin helps move glucose from the blood into cells for energy.</li>
+    <li>Long-term uncontrolled hyperglycaemia increases the risk of complications involving the eyes, kidneys, nerves
+    and cardiovascular system.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What is Insulin Resistance?</h2>
+  <p>In Type 2 diabetes, the pancreas usually continues to produce insulin, but body cells become less responsive to
+  it. Glucose therefore cannot enter cells efficiently, while the pancreas may progressively struggle to meet the
+  increased demand.</p>
+  <ul>
+    <li>Excess abdominal weight, inactivity and family history are important risk factors.</li>
+    <li>Prediabetes is often an early stage of this metabolic process.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What is Prediabetes?</h2>
+  <p>Prediabetes is a state in which blood glucose is higher than normal but not yet in the diabetic range.</p>
+  <ul>
+    <li>Fasting blood glucose: 100–125 mg/dL.</li>
+    <li>HbA1c: 5.7%–6.4%.</li>
+    <li>2-hour oral glucose tolerance test: 140–199 mg/dL.</li>
+    <li>Lifestyle changes and appropriate management can help prevent or delay progression to Type 2 diabetes.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What does HYPONIDD-DM do?</h2>
+  <ul>
+    <li>Supports improvement in insulin sensitivity.</li>
+    <li>Supports healthy insulin secretion.</li>
+    <li>Protects and supports regeneration of pancreatic β-cells.</li>
+    <li>Enhances glucose uptake and supports GLUT2 / GLUT4 regulation.</li>
+    <li>Provides antioxidant and anti-inflammatory support.</li>
+    <li>Supports glycaemic parameters in prediabetes and T2DM.</li>
+  </ul>
+</section>
+
+<section id="mode">
+  <h2>How does it work? – Mechanism of Action</h2>
+  <ul>
+    <li><strong>Insulin sensitivity:</strong> supports better cellular response to insulin.</li>
+    <li><strong>Insulin secretion:</strong> selected herbs support pancreatic insulin secretion.</li>
+    <li><strong>β-cell support:</strong> selected ingredients are positioned for pancreatic protection and regeneration.</li>
+    <li><strong>Glucose handling:</strong> supports glucose uptake and GLUT2 / GLUT4 pathways.</li>
+    <li><strong>Metabolic support:</strong> addresses oxidative stress and lipid metabolism.</li>
+  </ul>
+</section>
+
+<section id="ingredients">
+  <h2>What are its Ingredients?</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Ingredient</th><th>Latin / English Name</th><th class="num">Qty / Tablet</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Ingredient">Amalaki</td><td data-label="Latin / English Name"><em class="latin">Emblica officinalis</em></td><td class="num" data-label="Qty / Tablet">190 mg</td></tr>
+        <tr><td data-label="Ingredient">Haridra</td><td data-label="Latin / English Name"><em class="latin">Curcuma longa</em></td><td class="num" data-label="Qty / Tablet">110 mg</td></tr>
+        <tr><td data-label="Ingredient">Guduchi</td><td data-label="Latin / English Name"><em class="latin">Tinospora cordifolia</em></td><td class="num" data-label="Qty / Tablet">60 mg</td></tr>
+        <tr><td data-label="Ingredient">Rishyagandha</td><td data-label="Latin / English Name"><em class="latin">Withania coagulens</em></td><td class="num" data-label="Qty / Tablet">50 mg</td></tr>
+        <tr><td data-label="Ingredient">Raj jambu</td><td data-label="Latin / English Name"><em class="latin">Eugenia jambolana</em></td><td class="num" data-label="Qty / Tablet">40 mg</td></tr>
+        <tr><td data-label="Ingredient">Meshashringi</td><td data-label="Latin / English Name"><em class="latin">Gymnema sylvestre</em></td><td class="num" data-label="Qty / Tablet">40 mg</td></tr>
+        <tr><td data-label="Ingredient">Bijaka / Vijaysaar</td><td data-label="Latin / English Name"><em class="latin">Pterocarpus marsupium</em></td><td class="num" data-label="Qty / Tablet">25 mg</td></tr>
+        <tr><td data-label="Ingredient">Maricha</td><td data-label="Latin / English Name"><em class="latin">Piper nigrum</em></td><td class="num" data-label="Qty / Tablet">10 mg</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>What is the Ingredient-wise Action?</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Ingredient</th><th class="num">Qty / Tablet</th><th>Role of Ingredient</th></tr></thead>
+      <tbody>
+        <tr><td data-label="Ingredient">Amalaki</td><td class="num" data-label="Qty / Tablet">190 mg</td><td data-label="Role of Ingredient">Improves insulin sensitivity &amp; lipid metabolism</td></tr>
+        <tr><td data-label="Ingredient">Haridra</td><td class="num" data-label="Qty / Tablet">110 mg</td><td data-label="Role of Ingredient">Improves insulin sensitivity; protects &amp; regenerates pancreatic β-cells</td></tr>
+        <tr><td data-label="Ingredient">Guduchi</td><td class="num" data-label="Qty / Tablet">60 mg</td><td data-label="Role of Ingredient">Enhances insulin secretion; anti-inflammatory</td></tr>
+        <tr><td data-label="Ingredient">Rishyagandha</td><td class="num" data-label="Qty / Tablet">50 mg</td><td data-label="Role of Ingredient">Improves insulin sensitivity</td></tr>
+        <tr><td data-label="Ingredient">Raj jambu</td><td class="num" data-label="Qty / Tablet">40 mg</td><td data-label="Role of Ingredient">Enhances insulin secretion; antioxidant pancreatic protection</td></tr>
+        <tr><td data-label="Ingredient">Meshashringi</td><td class="num" data-label="Qty / Tablet">40 mg</td><td data-label="Role of Ingredient">Supports regeneration of pancreatic β-cells</td></tr>
+        <tr><td data-label="Ingredient">Bijaka / Vijaysaar</td><td class="num" data-label="Qty / Tablet">25 mg</td><td data-label="Role of Ingredient">Improves insulin secretion</td></tr>
+        <tr><td data-label="Ingredient">Maricha</td><td class="num" data-label="Qty / Tablet">10 mg</td><td data-label="Role of Ingredient">Enhances bioavailability of herbal actives</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>What is the Nishadhatri Yoga Concept?</h2>
+  <p>Dhatri Nisha Yoga (Nishamalaki) is described in the presentation as the combination of Dhatri (Amalaki) and Nisha
+  (Haridra), traditionally associated with Prameha management.</p>
+  <p>HYPONIDD-DM contains 190 mg of Amalaki and 110 mg of Haridra, which the presentation highlights as its Nishadhatri
+  Yoga-based positioning.</p>
+</section>
+
+<section id="evidence">
+  <h2>What is the Evidence to Support the Claims?</h2>
+  <p>The presentation states that HYPONIDD-DM is clinically proven to reduce parameters of glycaemic control, reporting
+  reductions of 81% in fasting plasma glucose, 75% in post-prandial glucose and 87% in glycated haemoglobin (HbA1c).</p>
+  <div class="stats">
+    <div class="stat"><b>81%</b><span>Fasting plasma glucose</span></div>
+    <div class="stat"><b>75%</b><span>Post-prandial glucose</span></div>
+    <div class="stat"><b>87%</b><span>Glycated haemoglobin (HbA1c)</span></div>
+  </div>
+  <p class="note">The presentation cites data on file based on a pilot study. It does not provide the complete study
+  methodology, sample size, comparator details or statistical analysis in the slides; therefore these details are not
+  added here.</p>
+  <ul>
+    <li>The product presentation also links its positioning to published ingredient-level evidence and Ayurvedic rationale.</li>
+  </ul>
+</section>
+
+<section id="competitors">
+  <h2>Who are the Competitors?</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Product</th><th>Company</th><th class="num">Pack</th><th class="num">MRP</th><th>Dosage</th>
+        <th class="num">Per tab cost</th><th class="num">Daily therapy</th></tr></thead>
+      <tbody>
+        <tr class="ours"><td data-label="Product">HYPONIDD-DM</td><td data-label="Company">—</td><td class="num" data-label="Pack">60</td><td class="num" data-label="MRP">₹300</td><td data-label="Dosage">1 BID</td><td class="num" data-label="Per tab cost">₹5.00</td><td class="num" data-label="Daily therapy">₹10.00</td></tr>
+        <tr><td data-label="Product">DIABECON</td><td data-label="Company">Himalaya</td><td class="num" data-label="Pack">60</td><td class="num" data-label="MRP">—</td><td data-label="Dosage">2 BID</td><td class="num" data-label="Per tab cost">₹2.97</td><td class="num" data-label="Daily therapy">₹11.87</td></tr>
+        <tr><td data-label="Product">DIABECON DS</td><td data-label="Company">Himalaya</td><td class="num" data-label="Pack">60</td><td class="num" data-label="MRP">₹286</td><td data-label="Dosage">1 BID</td><td class="num" data-label="Per tab cost">₹4.77</td><td class="num" data-label="Daily therapy">₹9.53</td></tr>
+        <tr><td data-label="Product">BGR-34</td><td data-label="Company">Aimil</td><td class="num" data-label="Pack">100</td><td class="num" data-label="MRP">₹663</td><td data-label="Dosage">2 BID</td><td class="num" data-label="Per tab cost">₹6.09</td><td class="num" data-label="Daily therapy">₹24.38</td></tr>
+        <tr><td data-label="Product">GLYCOAB</td><td data-label="Company">Dabur</td><td class="num" data-label="Pack">60</td><td class="num" data-label="MRP">₹365.63</td><td data-label="Dosage">2 BID</td><td class="num" data-label="Per tab cost">₹6.63</td><td class="num" data-label="Daily therapy">₹26.52</td></tr>
+        <tr><td data-label="Product">Diazen</td><td data-label="Company">Apex</td><td class="num" data-label="Pack">30</td><td class="num" data-label="MRP">₹159.30</td><td data-label="Dosage">2 BID</td><td class="num" data-label="Per tab cost">₹5.31</td><td class="num" data-label="Daily therapy">₹21.24</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>What are the Advantages over Diabecon?</h2>
+  <ul>
+    <li>Once-daily BID regimen: 1 tablet twice daily versus 2 tablets twice daily for Diabecon, as presented.</li>
+    <li>Higher Haridra concentration: 110 mg versus 10 mg powder.</li>
+    <li>Higher Meshashringi concentration: 40 mg versus 30 mg.</li>
+    <li>Raj jambu (<em>Eugenia jambolana</em>) at 40 mg versus Jambu (<em>Syzygium cumini</em>) 20 mg in the comparison.</li>
+    <li>Standardized extracts are used, whereas the presentation describes most Diabecon ingredients as powder forms.</li>
+    <li>Nishadhatri Yoga concept: the Amalaki + Haridra combination is a specific Ayurvedic positioning.</li>
+    <li>Daily therapy cost shown in the presentation: ₹10 versus ₹11.87.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What are the Unique Prescribing Reasons?</h2>
+  <ul>
+    <li>Standardized multi-herbal formulation for prediabetes and T2DM.</li>
+    <li>190 mg Amalaki + 110 mg Haridra as the highlighted Nishadhatri Yoga combination.</li>
+    <li>Multi-target approach: insulin sensitivity, insulin secretion, β-cell support and glucose uptake.</li>
+    <li>Higher concentrations of key herbs versus the cited Diabecon comparison.</li>
+    <li>Convenient 1 tablet BID dosage.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Target Audience – To whom should we promote?</h2>
+  <ul>
+    <li>Physicians managing patients with prediabetes.</li>
+    <li>Physicians managing patients with Type 2 diabetes.</li>
+    <li>Patients requiring supportive glycaemic management alongside diet, exercise and prescribed therapy.</li>
+    <li>Patients where a standardized multi-herbal formulation is considered appropriate.</li>
+  </ul>
+</section>
+
+<section id="dosage">
+  <h2>What is the Dosage, Packing &amp; MRP?</h2>
+  <div class="facts">
+    <div class="fact"><b>Dosage</b>1 tablet BID for a minimum of 3 months.</div>
+    <div class="fact"><b>Packing</b>60 tablets.</div>
+  </div>
+</section>
+
+<section class="recall">
+  <h2>Quick Recall</h2>
+  <ul>
+    <li>HYPONIDD-DM – In Prediabetes &amp; T2DM.</li>
+    <li>Composition: Amalaki, Haridra, Guduchi, Rishyagandha, Raj jambu, Meshashringi, Bijaka / Vijaysaar &amp; Maricha.</li>
+    <li>Key differentiators: Nishadhatri Yoga concept, standardized extracts, higher Haridra / Raj jambu / Meshashringi
+    concentrations and 1 BID dosage.</li>
+    <li>Positioning: multi-target glycaemic support.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

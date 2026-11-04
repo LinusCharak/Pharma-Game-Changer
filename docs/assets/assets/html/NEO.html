@@ -1,0 +1,629 @@
+<p align="center" style="margin-top:0pt; margin-bottom:10pt;"><img width="60%" src="data:image/jpeg;base64,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" alt="NeoBanner.jpg"/></p>
+<p style="text-align: center;"><strong>NEO</strong></p>
+<p style="text-align: center;"><em>(Natural approach for effective management of premature ejaculation)</em></p>
+<p style="text-align: center;"><em>(Natural approach for managing nocturnal enuresis in children)</em></p>
+<p style="text-align: center;"><em>&nbsp;</em></p>
+<p style="text-align: center;"><strong>What is NEO?</strong></p>
+<p>NEO is a natural approach for effective management of premature ejaculation in males &amp; for managing nocturnal enuresis in children.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>What are the indications of NEO?</strong></p>
+<ul>
+<li>Nocturnal semen emission</li>
+<li>Premature ejaculation</li>
+<li>Nocturnal enuresis (bed wetting) in children.</li>
+</ul>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>What is Nocturnal semen emission?</strong></p>
+<p>Nocturnal emission (Or commonly known as night fall) is an ejaculation of semen involuntarily.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>What is Premature ejaculation?</strong></p>
+<p>Premature ejaculation (PE) is when ejaculation happens sooner than a man or his partner would like during sex. Occasional PE is also known as rapid ejaculation, premature climax or early ejaculation. PE might not be a cause for worry. It can be frustrating if it makes sex less enjoyable and impacts relationships.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>What is Nocturnal enuresis in children?</strong></p>
+<p>Nocturnal enuresis is involuntary urination that happens at night while sleeping, after the age when a person should be able to control his or her bladder. (Involuntary urination that happens during the day is known as diurnal enuresis.)</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>What is the composition of NEO?</strong></p>
+<p style="text-align: center;"><strong>Each silver coated tablet contains</strong></p>
+<center>
+<table style="width: 100%; margin-left: auto; margin-right: auto;" border="1px">
+<tbody>
+<tr>
+<td style="text-align: center;" width="455">
+<p><strong>Name of Ingredients</strong></p>
+</td>
+<td style="text-align: center;" width="113">
+<p><strong>Qty/Tab</strong></p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="2" width="568">
+<p><strong>Powders</strong></p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>KUPILU SHUDDHA</strong><br /> (Purified Strychnos nux-vomica Sd.)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>20 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>SHILAJIT</strong><br /> (Asphaltum)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>8 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>CINNABAR (HINGUL)</strong><br /> (Purified Red Sulphide)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>8 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>MUKTASHUKTI BHASMA</strong><br /> (Calcinated Pearl Oyster Shell)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>8 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>YASTIMADHU</strong><br /> (Glycyrrhiza glabra Rt)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>8 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>VANG BHASMA</strong><br /> (Calcined Tin)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>2 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>LOH BHASMA</strong><br /> (Calcined Iron)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>2 mg</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" width="568">
+<p style="text-align: center;"><strong>Extracts:</strong></p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>KAPIKACCHU</strong><br /> (Purified Mucuna Pruriens Sd)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>14 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>SHATAVARI</strong><br /> (Asparagus racemosus Rt)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>10 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>PALANDU</strong><br /> (Allium cepa Bulb)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>10 mg</p>
+</td>
+</tr>
+<tr>
+<td width="455">
+<p><strong>BHRINGARAJA</strong><br /> (Eclipta alba Wh. Pl)</p>
+</td>
+<td style="text-align: center;" width="113">
+<p>5 mg</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>What is the Mechanism of Action of the various ingredients of NEO?</strong></p>
+<center>
+<table style="width: 100%; margin-left: auto; margin-right: auto;" border="1px">
+<tbody>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px; text-align: center;">
+<p><strong>Actions</strong></p>
+</td>
+<td style="width: 326.7px; height: 35px; text-align: center;">
+<p><strong>Ingredients</strong></p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Nervous sedative</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>KAPIKACHCHHU</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Calms the nervous impulses &amp; reduces the excitability of cerebral &amp; spinal center</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>KUPILU SHUDDHA</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Adaptogenic, anti-stress</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>SHILAJIT SHUDDHA</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Genito-urinary tonic</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>VANG BHASMA</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Hematinic</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>LOH BHASMA</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Adaptogenic</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>SHATAVARI</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Anxiolytic</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>YASHTIMADHU</p>
+</td>
+</tr>
+<tr style="height: 35px;">
+<td style="width: 679.3px; height: 35px;">
+<p>Calms the nervous impulses &amp; reduces the excitability of cerebral &amp; spinal center</p>
+</td>
+<td style="width: 326.7px; height: 35px;">
+<p>BHRINGARAJ</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>How does NEO work?</strong></p>
+<p style="text-align: center;"><strong>In premature ejaculation</strong></p>
+<ul>
+<li>NEO calms the nervous impulses &amp; reduces the excitability of cerebral &amp; spinal centers.</li>
+<li>NEO relieves neuro-muscular &amp; sexual irritability.</li>
+<li>NEO promotes decogestion of genitalia &amp; the prostrate &amp; thus helps in the management of premature ejaculation.</li>
+</ul>
+<p style="text-align: center;"><strong>In nocturnal enuresis (Bed wetting) in children:</strong></p>
+<ul>
+<li>NEO calms the nervous impulses &amp; reduces the excitability of cerebral &amp; spinal centers.</li>
+<li>NEO relieves neuro-muscular irritability.</li>
+</ul>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>Who are the competitors?</strong></p>
+<center>
+<table style="width: 100%; margin-left: auto; margin-right: auto;" border="1px">
+<tbody>
+<tr>
+<td style="text-align: center;" width="385">
+<p><strong>Brand</strong></p>
+</td>
+<td style="text-align: center;" width="385">
+<p><strong>Company</strong></p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" width="385">
+<p>Confido</p>
+</td>
+<td style="text-align: center;" width="385">
+<p>Himalaya</p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" width="385">
+<p>Tentex Forte</p>
+</td>
+<td style="text-align: center;" width="385">
+<p>Himalaya</p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" width="385">
+<p>Kutub 30 X</p>
+</td>
+<td style="text-align: center;" width="385">
+<p>Hetero</p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" width="385">
+<p>DA-Sutra</p>
+</td>
+<td style="text-align: center;" width="385">
+<p>Hetero</p>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" width="385">
+<p>Duralast</p>
+</td>
+<td style="text-align: center;" width="385">
+<p>Sun</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>How does NEO score over Competitors?</strong></p>
+<p style="text-align: center;"><strong>NEO superiority over Confido (Himalaya)</strong></p>
+<center>
+<table style="width: 100%; margin-left: auto; margin-right: auto;" border="1px">
+<tbody>
+<tr>
+<td style="width: 554px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p><strong>NEO</strong></p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p><strong>Confido</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 788.938px;" colspan="2">
+<p><strong>Powders &amp; Bhasmas:</strong></p>
+</td>
+<td style="width: 210.062px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>KAPIKACHCHHU</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>56 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>20 mg</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>KUPILU SHUDDHA</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>20 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>HINGUL SHUDDHA</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>8 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>MUKTASHUKTI BHASMA</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>8 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>SHILAJIT SHUDDHA</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>8 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>VANG BHASMA</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>2 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>LOH BHASMA</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>2 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 788.938px;" colspan="2">
+<p><strong>Extracts:</strong></p>
+</td>
+<td style="width: 210.062px;">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>SHATAVARI</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>35 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>YASHTIMADHU</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>8 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 788.938px;" colspan="2">
+<p><strong>Bhavana:</strong></p>
+</td>
+<td style="width: 210.062px;">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>PALANDU</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>90 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td style="width: 554px;">
+<p>BHRINGARAJ</p>
+</td>
+<td style="text-align: center; width: 234.938px;">
+<p>16 mg</p>
+</td>
+<td style="text-align: center; width: 210.062px;">
+<p>0</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>NEO superiority over Kutub (Hetero)</strong></p>
+<center>
+<table style="width: 100%; margin-left: auto; margin-right: auto;" border="1px">
+<tbody>
+<tr>
+<td style="width: 535.375px; text-align: center;">
+<p><strong>Neo</strong></p>
+</td>
+<td style="width: 467.625px; text-align: center;">
+<p><strong>Kutub</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>Calms the nervous impulse</p>
+</td>
+<td style="width: 467.625px;">
+<p>Blocks the selective serotonin re-uptake inhibition</p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>Reduces the excitability of cerebral centers</p>
+</td>
+<td style="width: 467.625px;">
+<p>No such effects shown</p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>Reduces the excitability of spinal centers</p>
+</td>
+<td style="width: 467.625px;">
+<p>No such effects shown</p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>Synergistic effects as an antidepressant with other ingredients</p>
+</td>
+<td style="width: 467.625px;">
+<p>Only have antidepressant affect</p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>It increases the IELTS for long term</p>
+</td>
+<td style="width: 467.625px;">
+<p>No long term benefits</p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>Neo relieves neuro muscular &amp; sexual irritability</p>
+</td>
+<td style="width: 467.625px;">
+<p>No such effect shown</p>
+</td>
+</tr>
+<tr>
+<td style="width: 535.375px;">
+<p>Promotes decongestion of genitatlia &amp; the prostrate &amp; thus helps in the management of premature ejaculation</p>
+</td>
+<td style="width: 467.625px;">
+<p>Only treats PME by blocking the SSRI</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>&nbsp;</p>
+<p><center><strong>Whom should be Promoted?</strong></center></p>
+<center>
+<table style="width: 100%; margin-left: auto; margin-right: auto;" border="1px">
+<tbody>
+<tr>
+<td style="text-align: center;" width="385">
+<p><strong>Speciality</strong></p>
+</td>
+<td style="text-align: center;" width="385">
+<p><strong>Indication</strong></p>
+</td>
+</tr>
+<tr>
+<td width="385">
+<p>Sexologist</p>
+</td>
+<td width="385">
+<p>In PME</p>
+</td>
+</tr>
+<tr>
+<td width="385">
+<p>Urologist</p>
+</td>
+<td width="385">
+<p>In PME</p>
+</td>
+</tr>
+<tr>
+<td width="385">
+<p>Physician</p>
+</td>
+<td width="385">
+<p>In PME</p>
+</td>
+</tr>
+<tr>
+<td width="385">
+<p>Child Specialist</p>
+</td>
+<td width="385">
+<p>In Bed Wetting</p>
+</td>
+</tr>
+<tr>
+<td width="385">
+<p>GP (MBBS)</p>
+</td>
+<td width="385">
+<p>In PME &amp; Bed Wetting</p>
+</td>
+</tr>
+<tr>
+<td width="385">
+<p>GP (Non-MBBS)</p>
+</td>
+<td width="385">
+<p>In PME &amp; Bed Wetting</p>
+</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><strong>&nbsp;</strong></p>
+<p style="text-align: center;"><strong>What is the Dosage?</strong></p>
+<p style="text-align: center;"><strong>Adults :</strong> 1 - 2 tablets 2 times daily for 6-8 weeks</p>
+<p style="text-align: center;"><strong>Children :</strong> 1 tablet 3 times daily for 4 to 6 weeks. Can be crushed if required and administered with honey.</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;"><strong>PRESENTATION</strong></p>
+<p style="text-align: center;">Plastic container of 75 silver coated tablets</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Disable text selection */
+    body {
+      user-select: none;
+    }
+	table, td, th {
+		border-collapse: collapse;
+		}	
+  </style>
+</head>
+<body>
+
+  <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Disable keyboard shortcuts for copy (Ctrl+C), paste (Ctrl+V), and cut (Ctrl+X)
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x'))) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
